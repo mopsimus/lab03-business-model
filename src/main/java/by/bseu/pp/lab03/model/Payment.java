@@ -12,7 +12,18 @@ public class Payment {
     private PaymentStatus status;
 
     public Payment(String paymentId, double amount, LocalDate date) {
-        // TODO: validate constructor arguments
+        if (paymentId == null || paymentId.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
+        if (amount <= 0) {
+            throw new IllegalArgumentException();
+        }
+
+        if (date == null) {
+            throw new IllegalArgumentException();
+        }
+
         this.paymentId = paymentId;
         this.amount = amount;
         this.date = date;
@@ -36,17 +47,22 @@ public class Payment {
     }
 
     public void markSuccessful() {
-        // TODO: change CREATED payment to SUCCESSFUL
-        throw new UnsupportedOperationException("TODO");
+        if (status != PaymentStatus.CREATED) {
+            throw new IllegalStateException();
+        }
+
+        status = PaymentStatus.SUCCESSFUL;
     }
 
     public void markFailed() {
-        // TODO: change CREATED payment to FAILED
-        throw new UnsupportedOperationException("TODO");
+        if (status != PaymentStatus.CREATED) {
+            throw new IllegalStateException();
+        }
+
+        status = PaymentStatus.FAILED;
     }
 
     public boolean isSuccessful() {
-        // TODO: return true only for SUCCESSFUL payment
-        throw new UnsupportedOperationException("TODO");
+        return status == PaymentStatus.SUCCESSFUL;
     }
 }

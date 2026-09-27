@@ -12,7 +12,17 @@ public class Customer {
     private double creditLimit;
 
     public Customer(String code, String name, double creditLimit) {
-        // TODO: validate constructor arguments
+        if (code == null || code.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
+        if (creditLimit < 0) {
+            throw new IllegalArgumentException();
+        }
         this.code = code;
         this.name = name;
         this.creditLimit = creditLimit;
@@ -36,27 +46,34 @@ public class Customer {
     }
 
     public void rename(String newName) {
-        // TODO: validate and change the customer name
-        throw new UnsupportedOperationException("TODO");
+        if (newName == null || newName.isBlank()) {
+            throw new IllegalArgumentException();
+        }
+
+        this.name = newName;
     }
 
     public void changeCreditLimit(double newCreditLimit) {
-        // TODO: validate and change the credit limit
-        throw new UnsupportedOperationException("TODO");
+        if (newCreditLimit < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        this.creditLimit = newCreditLimit;
     }
 
     public void activate() {
-        // TODO: activate the customer
-        throw new UnsupportedOperationException("TODO");
+        this.active = true;
     }
 
     public void deactivate() {
-        // TODO: deactivate the customer
-        throw new UnsupportedOperationException("TODO");
+        this.active = false;
     }
 
     public boolean canPlaceOrder(double orderTotal) {
-        // TODO: return true only for an active customer whose order fits the credit limit
-        throw new UnsupportedOperationException("TODO");
+        if (orderTotal < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        return active && orderTotal <= creditLimit;
     }
 }
